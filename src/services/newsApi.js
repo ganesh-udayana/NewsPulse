@@ -3,12 +3,16 @@ import { INITIAL_STORIES } from '../data/demoData';
 const STORAGE_KEY = 'newspulse_stories_v1';
 
 function mergeStoryMedia(stories) {
-  return stories.map(story => {
+  const refreshedStories = stories.map(story => {
     const currentStory = INITIAL_STORIES.find(initial => initial.id === story.id);
     return currentStory
       ? { ...story, image: currentStory.image, imageAlt: currentStory.imageAlt }
       : story;
   });
+
+  const storedIds = new Set(stories.map(story => story.id));
+  const newStories = INITIAL_STORIES.filter(story => !storedIds.has(story.id));
+  return [...refreshedStories, ...newStories];
 }
 
 export function getStoredStories() {

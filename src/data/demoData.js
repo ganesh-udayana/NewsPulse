@@ -1,3 +1,90 @@
+const ADDITIONAL_STORIES = [
+  {
+    id: "story-ai-chip-export-controls",
+    title: "Chipmakers Unveil Energy-Efficient AI Processors for Edge Devices",
+    category: "Technology",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Blue digital circuit board with processor lines",
+    momentum: 81,
+    status: "Developing",
+    lastUpdated: "24 minutes ago",
+    publishedDate: "2026-09-10",
+    summary: "Semiconductor companies are moving inference workloads closer to users with smaller processors designed for phones, vehicles, and industrial sensors.",
+    keyPoints: [
+      "New processors reduce inference power use compared with cloud-only workloads.",
+      "Vehicle and robotics manufacturers are testing local models for lower response latency.",
+      "Export licensing remains a concern for advanced manufacturing equipment."
+    ],
+    whyItMatters: "Local AI processing could reduce cloud costs and improve privacy for everyday devices.",
+    whatsNext: "Independent benchmarks and first commercial device announcements are expected this quarter.",
+    uncertainties: ["Long-term supply of advanced packaging capacity.", "Whether performance gains justify higher device prices."],
+    whatsNew: { lastCompared: "24m ago vs 3h ago", newlyReported: ["Two automotive suppliers began fleet trials."], changedDetails: ["Projected power savings increased from 30% to 36%."], conflictingReports: ["Analysts disagree on near-term production volumes."], stillUnknown: ["Final retail pricing for consumer devices."] },
+    sourceAgreement: { ratio: "5 of 6 sources agree on the efficiency gains", score: 82, disclaimer: "Source Agreement measures reporting consensus across tracked outlets. It is not an independent truth score." },
+    sources: [{ id: "s12", name: "MIT Technology Review", headline: "The Next AI Race Is Happening at the Edge", time: "24m ago", focus: "Processor architecture and deployment", url: "https://www.technologyreview.com" }, { id: "s13", name: "IEEE Spectrum", headline: "Tiny AI Chips Move Inference Out of the Cloud", time: "2h ago", focus: "Engineering benchmarks", url: "https://spectrum.ieee.org" }],
+    timeline: [{ id: "t12", time: "Today, 14:36", headline: "Automotive suppliers begin edge processor fleet trials", source: "MIT Technology Review", tag: "Trial" }, { id: "t13", time: "Today, 12:10", headline: "Chip consortium publishes efficiency benchmark", source: "IEEE Spectrum", tag: "Benchmark" }]
+  },
+  {
+    id: "story-ocean-mapping-mission",
+    title: "Autonomous Ocean Survey Maps Deep-Sea Thermal Vents in Unprecedented Detail",
+    category: "Science",
+    image: "https://images.unsplash.com/photo-1484291470158-b8f8d608850d?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Deep blue ocean surface viewed from above",
+    momentum: 74,
+    status: "Active",
+    lastUpdated: "46 minutes ago",
+    publishedDate: "2026-09-10",
+    summary: "A coordinated fleet of autonomous underwater vehicles has completed the first high-resolution survey of a remote Pacific ridge system.",
+    keyPoints: ["Vehicles operated for 19 days without surfacing.", "The maps reveal previously unknown mineral-rich vent fields.", "Biologists collected environmental DNA samples for new species analysis."],
+    whyItMatters: "The survey improves understanding of deep-ocean ecosystems while informing responsible resource policy.",
+    whatsNext: "Researchers will compare the samples with historical expedition records before publishing the full dataset.",
+    uncertainties: ["Whether the vent ecosystem is seasonal.", "How mining proposals could affect the habitat."],
+    whatsNew: { lastCompared: "46m ago vs 5h ago", newlyReported: ["A second vent field was detected beyond the original search zone."], changedDetails: ["Survey coverage expanded by 18%."], conflictingReports: ["Teams differ on the age of the newly mapped formations."], stillUnknown: ["The number of species unique to the ridge." ] },
+    sourceAgreement: { ratio: "6 of 6 sources confirm the survey coverage", score: 91, disclaimer: "Source Agreement measures reporting consensus across tracked outlets. It is not an independent truth score." },
+    sources: [{ id: "s14", name: "Science News", headline: "Robotic Fleet Reveals Hidden Life on Pacific Ridge", time: "46m ago", focus: "Marine biology findings", url: "https://www.sciencenews.org" }, { id: "s15", name: "Nature", headline: "Deep-Sea Robots Extend the Map of Earth", time: "3h ago", focus: "Survey technology and geography", url: "https://www.nature.com" }],
+    timeline: [{ id: "t14", time: "Today, 13:54", headline: "Autonomous fleet completes final ridge transect", source: "Science News", tag: "Survey" }, { id: "t15", time: "Today, 09:20", headline: "Environmental DNA samples transferred to research vessel", source: "Nature", tag: "Discovery" }]
+  },
+  {
+    id: "story-grid-storage-project",
+    title: "Long-Duration Grid Storage Project Connects First Demonstration Array",
+    category: "Energy",
+    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Solar panels and wind turbines in a renewable energy field",
+    momentum: 72,
+    status: "Monitoring",
+    lastUpdated: "1 hour ago",
+    publishedDate: "2026-09-10",
+    summary: "A hybrid renewable-energy site has connected a multi-day storage array designed to stabilize power during extended periods of low wind and sunlight.",
+    keyPoints: ["The array can deliver power for up to 72 hours.", "Operators will test the system through the autumn demand cycle.", "The project combines solar, wind, and iron-based storage chemistry."],
+    whyItMatters: "Long-duration storage could make renewable power more dependable without relying on fossil-fuel peaker plants.",
+    whatsNext: "Grid operators will publish reliability data after the first full seasonal test.",
+    uncertainties: ["Maintenance costs at commercial scale.", "Performance during extreme winter temperatures."],
+    whatsNew: { lastCompared: "1h ago vs 7h ago", newlyReported: ["The demonstration array completed its first overnight discharge."], changedDetails: ["Expected round-trip efficiency was revised to 78%."], conflictingReports: ["Project backers report different estimates for levelized storage cost."], stillUnknown: ["Final insurance requirements for multi-day operation."] },
+    sourceAgreement: { ratio: "5 of 5 sources confirm the first grid connection", score: 89, disclaimer: "Source Agreement measures reporting consensus across tracked outlets. It is not an independent truth score." },
+    sources: [{ id: "s16", name: "Canary Media", headline: "A New Test for Multi-Day Grid Batteries", time: "1h ago", focus: "Grid operations and storage", url: "https://www.canarymedia.com" }, { id: "s17", name: "Utility Dive", headline: "Hybrid Storage Site Begins Reliability Trial", time: "4h ago", focus: "Utility planning and costs", url: "https://www.utilitydive.com" }],
+    timeline: [{ id: "t16", time: "Today, 13:05", headline: "Storage array completes first overnight discharge", source: "Canary Media", tag: "Milestone" }, { id: "t17", time: "Today, 08:45", headline: "Grid control room accepts demonstration site", source: "Utility Dive", tag: "Connection" }]
+  },
+  {
+    id: "story-ransomware-healthcare-network",
+    title: "Healthcare Network Restores Clinical Systems After Coordinated Ransomware Incident",
+    category: "Cybersecurity",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Rows of secure network servers in a data center",
+    momentum: 79,
+    status: "Rapidly Developing",
+    lastUpdated: "29 minutes ago",
+    publishedDate: "2026-09-10",
+    summary: "A regional healthcare network is bringing hospitals back online after isolating an intrusion that disrupted scheduling and diagnostic workflows.",
+    keyPoints: ["Emergency care remained operational on segmented systems.", "The network disconnected affected identity and scheduling services.", "Investigators are reviewing whether patient data was accessed."],
+    whyItMatters: "Healthcare incidents can affect patient safety as well as privacy, making recovery speed and disclosure decisions critical.",
+    whatsNext: "The network will publish a preliminary incident notice after forensic imaging is complete.",
+    uncertainties: ["Whether attackers copied protected health information.", "The initial access vector used in the intrusion."],
+    whatsNew: { lastCompared: "29m ago vs 3h ago", newlyReported: ["Three hospitals returned to normal scheduling operations."], changedDetails: ["The estimated recovery window moved forward by one day."], conflictingReports: ["Sources disagree about whether a third-party vendor was involved."], stillUnknown: ["The identity of the threat group."] },
+    sourceAgreement: { ratio: "4 of 5 sources agree on the recovery sequence", score: 78, disclaimer: "Source Agreement measures reporting consensus across tracked outlets. It is not an independent truth score." },
+    sources: [{ id: "s18", name: "BleepingComputer", headline: "Hospital Network Begins Recovery After Ransomware Attack", time: "29m ago", focus: "Incident response and malware", url: "https://www.bleepingcomputer.com" }, { id: "s19", name: "HealthITSecurity", headline: "Clinical Services Return as Forensics Continue", time: "2h ago", focus: "Patient safety and disclosure", url: "https://healthitsecurity.com" }],
+    timeline: [{ id: "t18", time: "Today, 14:22", headline: "Three hospitals restore scheduling services", source: "BleepingComputer", tag: "Recovery" }, { id: "t19", time: "Today, 11:40", headline: "Network isolates identity management systems", source: "HealthITSecurity", tag: "Containment" }]
+  }
+];
+
 export const INITIAL_STORIES = [
   {
     id: "story-ai-eu-regulations",
@@ -209,7 +296,8 @@ export const INITIAL_STORIES = [
       { id: "t10", time: "Today, 12:00", headline: "NIST and BIS issue joint implementation roadmap", source: "Wall Street Journal", tag: "Standard" },
       { id: "t11", time: "Today, 08:30", headline: "First commercial PQC interbank test completed in Frankfurt", source: "Wired", tag: "Trial" }
     ]
-  }
+  },
+  ...ADDITIONAL_STORIES
 ];
 
 export const DEMO_USER = {
