@@ -63,7 +63,7 @@ export default function DashboardPage() {
       {/* Featured Primary Developing Story */}
       {primaryStory && (
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
-          <div className="aspect-[16/7] w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 mb-4 sm:mb-6">
+          <div className="h-44 w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 mb-4 sm:h-56 sm:mb-6 lg:h-64">
             <img src={primaryStory.image} alt={primaryStory.imageAlt} className="h-full w-full object-contain" />
           </div>
           <div className="flex flex-wrap items-center gap-2.5 mb-4">
