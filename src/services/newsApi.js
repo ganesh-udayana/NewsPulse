@@ -2,6 +2,15 @@ import { INITIAL_STORIES } from '../data/demoData';
 
 const STORAGE_KEY = 'newspulse_stories_v1';
 
+function mergeStoryMedia(stories) {
+  return stories.map(story => {
+    const currentStory = INITIAL_STORIES.find(initial => initial.id === story.id);
+    return currentStory
+      ? { ...story, image: currentStory.image, imageAlt: currentStory.imageAlt }
+      : story;
+  });
+}
+
 export function getStoredStories() {
   const data = localStorage.getItem(STORAGE_KEY);
   if (!data) {
@@ -9,7 +18,9 @@ export function getStoredStories() {
     return INITIAL_STORIES;
   }
   try {
-    return JSON.parse(data);
+    const stories = mergeStoryMedia(JSON.parse(data));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stories));
+    return stories;
   } catch (e) {
     return INITIAL_STORIES;
   }
