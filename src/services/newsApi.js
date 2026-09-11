@@ -44,6 +44,7 @@ export async function fetchAllStories(query = '') {
     if (!response.ok) throw new Error(`News API returned ${response.status}`);
     const stories = await response.json();
     if (!Array.isArray(stories)) throw new Error('Invalid news response');
+    if (stories.length === 0) throw new Error('No live stories available');
     localStorage.setItem(query.trim() ? SEARCH_STORAGE_KEY : STORAGE_KEY, JSON.stringify(stories));
     const provider = response.headers.get('X-News-Provider') || 'Live provider';
     localStorage.setItem('newspulse_news_status', JSON.stringify({
