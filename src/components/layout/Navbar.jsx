@@ -22,10 +22,10 @@ export default function Navbar({ onSimulate, onToggleMobileNav }) {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md transition-colors">
-      <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="flex min-h-16 items-center justify-between gap-2 px-3 sm:px-6 lg:px-8">
         
         {/* Brand & Mobile Hamburger */}
-        <div className="flex items-center gap-3 sm:gap-6">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-6">
           {user && (
             <button
               onClick={onToggleMobileNav}
@@ -35,12 +35,12 @@ export default function Navbar({ onSimulate, onToggleMobileNav }) {
             </button>
           )}
 
-          <Link to={user ? "/dashboard" : "/"} className="flex items-center gap-2.5 group">
+          <Link to={user ? "/dashboard" : "/"} className="flex min-w-0 items-center gap-2 group">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/25 group-hover:bg-blue-500 transition-all">
               <Newspaper className="h-5 w-5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
+              <span className="truncate text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
                 NewsPulse <span className="text-blue-500 text-[10px] px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 uppercase font-bold tracking-wide">AI</span>
               </span>
               <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-tight -mt-1 hidden sm:inline">
@@ -67,7 +67,7 @@ export default function Navbar({ onSimulate, onToggleMobileNav }) {
         )}
 
         {/* Header Right Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex shrink-0 items-center gap-0.5 sm:gap-3">
           
           {/* Demo Simulation Action Button */}
           {user && onSimulate && (
@@ -108,7 +108,7 @@ export default function Navbar({ onSimulate, onToggleMobileNav }) {
               </button>
 
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl z-50 p-4 animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute right-0 mt-2 w-[min(90vw,24rem)] rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl z-50 p-4 animate-in fade-in zoom-in-95 duration-150">
                   <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-3">
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">Developing Story Alerts</span>

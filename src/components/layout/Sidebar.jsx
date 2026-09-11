@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
-export default function Sidebar() {
+export default function Sidebar({ mobile = false, onNavigate }) {
   const { user } = useAuth();
   if (!user) return null;
 
@@ -29,7 +29,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="hidden md:flex flex-col w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 p-4 shrink-0">
+    <aside className={`${mobile ? 'flex w-full border-0' : 'hidden md:flex w-64 border-r'} flex-col border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 p-4 shrink-0`}>
       
       {/* Cluster Engine Status Banner */}
       <div className="mb-6 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
@@ -51,6 +51,7 @@ export default function Sidebar() {
           <NavLink
             key={to}
             to={to}
+            onClick={onNavigate}
             className={({ isActive }) => `
               flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all
               ${isActive 

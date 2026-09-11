@@ -17,6 +17,7 @@ import TrendingPage from './pages/TrendingPage';
 import CategoriesPage from './pages/CategoriesPage';
 import SearchPage from './pages/SearchPage';
 import { getStoredStories, saveStories } from './services/newsApi';
+import { X } from 'lucide-react';
 
 function AppContent() {
   const { user } = useAuth();
@@ -64,6 +65,31 @@ function AppContent() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       <Navbar onSimulate={handleGlobalSimulate} onToggleMobileNav={() => setMobileNavOpen(!mobileNavOpen)} />
+
+      {mobileNavOpen && user && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <button
+            type="button"
+            aria-label="Close navigation"
+            onClick={() => setMobileNavOpen(false)}
+            className="absolute inset-0 bg-slate-950/60"
+          />
+          <div className="relative h-full w-[min(84vw,20rem)] bg-white dark:bg-slate-900 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 p-4">
+              <span className="text-sm font-bold text-slate-900 dark:text-white">NewsPulse Menu</span>
+              <button
+                type="button"
+                aria-label="Close navigation"
+                onClick={() => setMobileNavOpen(false)}
+                className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <Sidebar mobile onNavigate={() => setMobileNavOpen(false)} />
+          </div>
+        </div>
+      )}
       
       <div className="flex flex-1">
         {!isAuthView && <Sidebar />}

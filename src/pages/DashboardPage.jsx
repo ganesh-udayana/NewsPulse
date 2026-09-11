@@ -30,7 +30,7 @@ export default function DashboardPage() {
   const secondaryStories = stories.slice(1);
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-8 text-left">
+    <div className="p-3 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 sm:space-y-8 text-left">
       
       {/* Top Welcome Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
@@ -52,8 +52,8 @@ export default function DashboardPage() {
 
       {/* Featured Primary Developing Story */}
       {primaryStory && (
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
-          <img src={primaryStory.image} alt={primaryStory.imageAlt} className="w-full h-52 sm:h-64 object-cover rounded-xl mb-6" />
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
+          <img src={primaryStory.image} alt={primaryStory.imageAlt} className="w-full h-44 sm:h-64 object-cover rounded-xl mb-4 sm:mb-6" />
           <div className="flex flex-wrap items-center gap-2.5 mb-4">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700 dark:bg-red-950/80 dark:text-red-400 uppercase tracking-wide flex items-center gap-1">
               <span className="h-2 w-2 rounded-full bg-red-500 animate-ping" />
@@ -82,7 +82,7 @@ export default function DashboardPage() {
             <WhatsNewSection whatsNew={primaryStory.whatsNew} />
           </div>
 
-          <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
             <Link 
               to={`/story/${primaryStory.id}`}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-sm transition-all"
