@@ -7,7 +7,10 @@ export default function TrendingPage() {
   const [stories, setStories] = useState([]);
 
   useEffect(() => {
-    fetchAllStories().then(data => setStories([...data].sort((a, b) => b.momentum - a.momentum)));
+    const refreshStories = () => fetchAllStories().then(data => setStories([...data].sort((a, b) => b.momentum - a.momentum)));
+    refreshStories();
+    const intervalId = window.setInterval(refreshStories, 5 * 60 * 1000);
+    return () => window.clearInterval(intervalId);
   }, []);
 
   return (

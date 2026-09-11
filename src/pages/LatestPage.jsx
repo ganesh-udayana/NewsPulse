@@ -7,7 +7,10 @@ export default function LatestPage() {
   const [stories, setStories] = useState([]);
 
   useEffect(() => {
-    fetchAllStories().then(data => setStories(data));
+    const refreshStories = () => fetchAllStories().then(data => setStories(data));
+    refreshStories();
+    const intervalId = window.setInterval(refreshStories, 5 * 60 * 1000);
+    return () => window.clearInterval(intervalId);
   }, []);
 
   return (

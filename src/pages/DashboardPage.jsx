@@ -11,10 +11,13 @@ export default function DashboardPage() {
   const { savedStories, toggleSaveStory } = useAuth();
 
   useEffect(() => {
-    fetchAllStories().then(data => {
+    const refreshStories = () => fetchAllStories().then(data => {
       setStories(data);
       setLoading(false);
     });
+    refreshStories();
+    const intervalId = window.setInterval(refreshStories, 5 * 60 * 1000);
+    return () => window.clearInterval(intervalId);
   }, []);
 
   if (loading) {
