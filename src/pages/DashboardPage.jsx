@@ -16,7 +16,7 @@ export default function DashboardPage() {
       setLoading(false);
     });
     refreshStories();
-    const intervalId = window.setInterval(refreshStories, 5 * 60 * 1000);
+    const intervalId = window.setInterval(refreshStories, 60 * 1000);
     return () => window.clearInterval(intervalId);
   }, []);
 

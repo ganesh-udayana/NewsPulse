@@ -9,7 +9,7 @@ export default function LatestPage() {
   useEffect(() => {
     const refreshStories = () => fetchAllStories().then(data => setStories(data));
     refreshStories();
-    const intervalId = window.setInterval(refreshStories, 5 * 60 * 1000);
+    const intervalId = window.setInterval(refreshStories, 60 * 1000);
     return () => window.clearInterval(intervalId);
   }, []);
 
