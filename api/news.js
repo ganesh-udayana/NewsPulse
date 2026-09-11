@@ -1,21 +1,13 @@
-const FALLBACK_IMAGES = {
-  Technology: {
-    url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
-    alt: 'Circuit board representing technology'
-  },
-  Science: {
-    url: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80',
-    alt: 'Earth viewed from orbit'
-  },
-  Energy: {
-    url: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80',
-    alt: 'Solar panels generating renewable energy'
-  },
-  Cybersecurity: {
-    url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80',
-    alt: 'Secure network servers in a data center'
-  }
-};
+const FALLBACK_IMAGES = [
+  { url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80', alt: 'Circuit board representing technology' },
+  { url: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80', alt: 'Earth viewed from orbit' },
+  { url: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80', alt: 'Solar panels generating renewable energy' },
+  { url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80', alt: 'Secure network servers in a data center' },
+  { url: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80', alt: 'Blue digital circuit board' },
+  { url: 'https://images.unsplash.com/photo-1484291470158-b8f8d608850d?auto=format&fit=crop&w=1200&q=80', alt: 'Deep blue ocean surface' },
+  { url: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=80', alt: 'Wind turbines generating renewable energy' },
+  { url: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=80', alt: 'Digital security lock' }
+];
 
 function getCategory(article) {
   const text = `${article.title} ${article.description || ''}`.toLowerCase();
@@ -32,7 +24,7 @@ function makeId(article, index) {
 
 function normalizeArticle(article, index) {
   const category = getCategory(article);
-  const image = FALLBACK_IMAGES[category];
+  const image = FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
   const published = article.publishedAt ? new Date(article.publishedAt) : new Date();
   const sourceName = article.source?.name || 'News source';
   const summary = article.description || article.content || 'Open the source article for the latest reporting and context.';
