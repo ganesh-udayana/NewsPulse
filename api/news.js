@@ -126,7 +126,8 @@ export default async function handler(request, response) {
       providers.push(async () => {
         const result = await fetch(endpoint);
         const payload = await result.json();
-        return { name: 'NewsData.io', response: result, articles: (payload.results || []).map(normalizeNewsDataArticle) };
+        const articles = Array.isArray(payload.results) ? payload.results : [];
+        return { name: 'NewsData.io', response: result, articles: articles.map(normalizeNewsDataArticle) };
       });
     }
 
