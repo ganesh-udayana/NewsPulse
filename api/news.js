@@ -22,6 +22,27 @@ function makeId(article, index) {
   return `live-${Array.from(source).reduce((hash, character) => ((hash << 5) - hash + character.charCodeAt(0)) | 0, 0)}`;
 }
 
+function normalizeNewsDataArticle(article) {
+  return {
+    title: article.title,
+    description: article.description || article.content,
+    content: article.content,
+    image: article.image_url,
+    publishedAt: article.pubDate,
+    url: article.link,
+    source: { name: article.source_name || article.source_id || 'NewsData.io' }
+  };
+}
+
+function getRecentStories(articles) {
+  return articles
+    .filter(article => {
+      const publishedAt = Date.parse(article.publishedAt || '');
+      return !Number.isNaN(publishedAt) && publishedAt >= Date.now() - 24 * 60 * 60 * 1000;
+    })
+    .map(normalizeArticle);
+}
+
 function normalizeArticle(article, index) {
   const category = getCategory(article);
   const image = FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
@@ -82,31 +103,41 @@ export default async function handler(request, response) {
     return response.status(405).json({ error: 'Method not allowed' });
   }
 
-  const apiKey = process.env.GNEWS_API_KEY;
-  if (!apiKey) {
-    return response.status(503).json({ error: 'GNEWS_API_KEY is not configured' });
-  }
-
   try {
     const query = typeof request.query?.q === 'string' ? request.query.q.trim() : '';
     const from = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
     const to = new Date().toISOString();
-    const endpoint = query
-      ? `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&max=10&sortby=publishedAt&apikey=${encodeURIComponent(apiKey)}`
-      : `https://gnews.io/api/v4/top-headlines?lang=en&country=us&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&max=10&sortby=publishedAt&apikey=${encodeURIComponent(apiKey)}`;
-    const apiResponse = await fetch(endpoint);
-    if (!apiResponse.ok) {
-      return response.status(apiResponse.status).json({ error: 'The news provider rejected the request' });
+    const providers = [];
+
+    if (process.env.GNEWS_API_KEY) {
+      const endpoint = query
+        ? `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&max=10&sortby=publishedAt&apikey=${encodeURIComponent(process.env.GNEWS_API_KEY)}`
+        : `https://gnews.io/api/v4/top-headlines?lang=en&country=us&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&max=10&sortby=publishedAt&apikey=${encodeURIComponent(process.env.GNEWS_API_KEY)}`;
+      providers.push(async () => {
+        const result = await fetch(endpoint);
+        return { response: result, articles: (await result.json()).articles || [] };
+      });
     }
 
-    const payload = await apiResponse.json();
-    const stories = (payload.articles || [])
-      .filter(article => {
-        const publishedAt = Date.parse(article.publishedAt || '');
-        return !Number.isNaN(publishedAt) && publishedAt >= Date.now() - 24 * 60 * 60 * 1000;
-      })
-      .map(normalizeArticle);
-    return response.status(200).json(stories);
+    if (process.env.NEWSDATA_API_KEY) {
+      const endpoint = query
+        ? `https://newsdata.io/api/1/latest?apikey=${encodeURIComponent(process.env.NEWSDATA_API_KEY)}&q=${encodeURIComponent(query)}&language=en&size=10`
+        : `https://newsdata.io/api/1/latest?apikey=${encodeURIComponent(process.env.NEWSDATA_API_KEY)}&language=en&size=10`;
+      providers.push(async () => {
+        const result = await fetch(endpoint);
+        const payload = await result.json();
+        return { response: result, articles: (payload.results || []).map(normalizeNewsDataArticle) };
+      });
+    }
+
+    for (const provider of providers) {
+      const result = await provider();
+      if (!result.response.ok) continue;
+      const stories = getRecentStories(result.articles);
+      if (stories.length > 0) return response.status(200).json(stories);
+    }
+
+    return response.status(503).json({ error: 'No recent news provider returned results' });
   } catch (error) {
     console.error('News provider request failed:', error);
     return response.status(502).json({ error: 'Unable to retrieve live news' });

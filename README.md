@@ -84,9 +84,9 @@ This project currently uses a frontend authentication prototype. Users enter a u
 
 ## Live News API
 
-The app requests live headlines through the Vercel serverless function at `/api/news`. The function reads the server-only `GNEWS_API_KEY` environment variable and normalizes GNews articles into NewsPulse story cards. If the API key is missing, the request fails, or the provider rate limit is reached, the app falls back to the local stories in `src/data/demoData.js`.
+The app requests live headlines through the Vercel serverless function at `/api/news`. It tries GNews first through `GNEWS_API_KEY`, then NewsData.io through `NEWSDATA_API_KEY` if GNews is unavailable, rate-limited, or returns no recent articles. Both providers are normalized into NewsPulse story cards. If both fail, the client falls back to local stories in `src/data/demoData.js`.
 
-Never use a `VITE_` prefix for the API key because Vite exposes those variables to browser code. Add `GNEWS_API_KEY` in the Vercel project settings and in a local `.env` file for development. Do not commit `.env` or paste the key into source code.
+Never use a `VITE_` prefix for API keys because Vite exposes those variables to browser code. Add `GNEWS_API_KEY` and `NEWSDATA_API_KEY` in the Vercel project settings and in a local `.env` file for development. Do not commit `.env` or paste keys into source code.
 
 ## Data and Images
 
