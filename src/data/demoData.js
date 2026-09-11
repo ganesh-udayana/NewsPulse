@@ -303,10 +303,10 @@ export const INITIAL_STORIES = [
 export const DEMO_USER = {
   id: "user-1",
   name: "Alex Rivera",
+  username: "alexrivera",
   email: "demo@newspulse.ai",
   role: "Senior Intelligence Analyst",
   organization: "Global News Desk",
-  avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
   interests: ["Technology", "Science", "Energy", "Cybersecurity", "Markets"],
   savedCount: 3,
   followedCount: 2

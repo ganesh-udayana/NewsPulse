@@ -6,8 +6,10 @@ import { useAuth } from '../hooks/useAuth';
 const TOPICS = ["Technology", "AI & Robotics", "Clean Energy", "Markets & Economy", "Space Exploration", "Cybersecurity", "Health"];
 
 export default function SignupPage() {
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [selectedTopics, setSelectedTopics] = useState(["Technology", "AI & Robotics"]);
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -18,7 +20,8 @@ export default function SignupPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(email || 'analyst@newspulse.ai');
+    if (password !== confirmPassword) return;
+    login({ username, email });
     navigate('/dashboard');
   };
 
@@ -36,12 +39,12 @@ export default function SignupPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Full Name</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Username</label>
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Alex Rivera"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="e.g. alexrivera"
               className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
               required
             />
@@ -57,6 +60,35 @@ export default function SignupPage() {
               className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
               required
             />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Create a password"
+              className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
+              minLength={8}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Confirm Password</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Repeat your password"
+              className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
+              minLength={8}
+              required
+            />
+            {confirmPassword && password !== confirmPassword && (
+              <p className="text-[11px] text-red-500 mt-1">Passwords do not match.</p>
+            )}
           </div>
 
           <div>

@@ -80,7 +80,7 @@ src/
 
 ## Authentication Note
 
-This project currently uses a frontend demo authentication flow. Login values are entered by the user and stored locally for the session; there are no hard-coded credentials or real server-side authentication.
+This project currently uses a frontend authentication prototype. Users enter a username or email and password when signing in, and new accounts collect a username, email, password, and confirmation. Account state is stored locally; there are no hard-coded login values or real server-side authentication.
 
 ## Data and Images
 

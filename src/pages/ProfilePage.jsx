@@ -9,7 +9,9 @@ export default function ProfilePage() {
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-3xl mx-auto space-y-6 text-left">
       <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center gap-5">
-        <img src={user.avatar} alt={user.name} className="h-16 w-16 rounded-full object-cover ring-4 ring-blue-500/20" />
+        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-blue-600/15 text-blue-500 ring-4 ring-blue-500/10">
+          <User className="h-7 w-7" />
+        </div>
         <div>
           <h1 className="text-xl font-bold text-slate-900 dark:text-white">{user.name}</h1>
           <p className="text-xs text-blue-600 dark:text-blue-400 font-bold">{user.role}</p>

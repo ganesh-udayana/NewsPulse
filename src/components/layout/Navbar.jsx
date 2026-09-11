@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Newspaper, Bell, Search, Moon, Sun, Flame, LogOut, CheckCheck, Menu, X } from 'lucide-react';
+import { Newspaper, Bell, Search, Moon, Sun, Flame, LogOut, CheckCheck, Menu, User } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { DEMO_NOTIFICATIONS } from '../../data/demoData';
 
@@ -149,11 +149,9 @@ export default function Navbar({ onSimulate, onToggleMobileNav }) {
           {user ? (
             <div className="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-800">
               <Link to="/profile" className="flex items-center gap-2 group">
-                <img
-                  src={user.avatar}
-                  alt={user.name}
-                  className="h-8 w-8 rounded-full ring-2 ring-blue-500/20 object-cover"
-                />
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600/20 text-blue-400 ring-2 ring-blue-500/20">
+                  <User className="h-4 w-4" />
+                </span>
                 <span className="hidden xl:inline text-xs font-semibold text-slate-700 dark:text-slate-200 group-hover:text-blue-500">
                   {user.name}
                 </span>

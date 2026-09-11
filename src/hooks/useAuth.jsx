@@ -33,8 +33,14 @@ export function AuthProvider({ children }) {
     localStorage.setItem('newspulse_theme', theme);
   }, [theme]);
 
-  const login = (email) => {
-    const newUser = { ...DEMO_USER, email: email || DEMO_USER.email };
+  const login = ({ username, email }) => {
+    const normalizedUsername = username?.trim() || email?.split('@')[0] || 'analyst';
+    const newUser = {
+      ...DEMO_USER,
+      name: normalizedUsername,
+      username: normalizedUsername,
+      email: email?.trim() || `${normalizedUsername}@newspulse.local`
+    };
     setUser(newUser);
     localStorage.setItem('newspulse_user', JSON.stringify(newUser));
   };
