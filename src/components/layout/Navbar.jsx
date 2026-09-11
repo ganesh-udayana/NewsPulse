@@ -22,7 +22,7 @@ export default function Navbar({ onSimulate, onToggleMobileNav }) {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md transition-colors">
-      <div className="flex min-h-16 items-center justify-between gap-2 px-3 sm:px-6 lg:px-8">
+      <div className="flex min-h-16 flex-wrap items-center justify-between gap-2 px-3 sm:px-6 lg:px-8">
         
         {/* Brand & Mobile Hamburger */}
         <div className="flex min-w-0 items-center gap-2 sm:gap-6">
@@ -73,7 +73,7 @@ export default function Navbar({ onSimulate, onToggleMobileNav }) {
           {user && onSimulate && (
             <button
               onClick={onSimulate}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 transition-all shadow-sm cursor-pointer"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 transition-all shadow-sm cursor-pointer"
               title="Inject a simulated breaking update into a story"
             >
               <Flame className="h-3.5 w-3.5 text-amber-500 animate-pulse" />
@@ -181,6 +181,21 @@ export default function Navbar({ onSimulate, onToggleMobileNav }) {
             </div>
           )}
         </div>
+
+        {user && (
+          <form onSubmit={handleSearch} className="order-3 basis-full pb-3 md:hidden">
+            <div className="relative w-full">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search stories and topics..."
+                className="w-full rounded-full border border-slate-200 bg-slate-100 py-2 pl-10 pr-4 text-xs text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-100 dark:placeholder-slate-500"
+              />
+            </div>
+          </form>
+        )}
 
       </div>
     </header>
