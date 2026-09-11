@@ -1,24 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { fetchAllStories } from '../services/newsApi';
 
 export default function SearchPage() {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
   const query = params.get('q') || '';
   const [searchTerm, setSearchTerm] = useState(query);
+  const [searchedStories, setSearchedStories] = useState([]);
   const [stories, setStories] = useState([]);
 
   useEffect(() => {
     setSearchTerm(query);
-    fetchAllStories().then(setStories);
+    fetchAllStories(query).then(results => {
+      setStories(results);
+      setSearchedStories(results);
+    });
   }, [query]);
 
-  const filtered = stories.filter(s => 
+  const filtered = (query ? searchedStories : stories).filter(s =>
     s.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const nextQuery = searchTerm.trim();
+    navigate(nextQuery ? `/search?q=${encodeURIComponent(nextQuery)}` : '/search');
+  };
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 text-left">
@@ -30,7 +41,7 @@ export default function SearchPage() {
         <p className="text-xs text-slate-500">Instant cross-referencing across all active storylines</p>
       </div>
 
-      <div className="relative max-w-md">
+      <form onSubmit={handleSubmit} className="relative max-w-md flex gap-2">
         <input
           type="text"
           value={searchTerm}
@@ -38,7 +49,8 @@ export default function SearchPage() {
           placeholder="Filter by keyword, entity, category..."
           className="w-full px-4 py-2 text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
         />
-      </div>
+        <button type="submit" className="px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-500">Search</button>
+      </form>
 
       <div className="space-y-3">
         {filtered.length === 0 ? (

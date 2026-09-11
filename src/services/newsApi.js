@@ -1,6 +1,7 @@
 import { INITIAL_STORIES } from '../data/demoData';
 
 const STORAGE_KEY = 'newspulse_stories_v1';
+const SEARCH_STORAGE_KEY = 'newspulse_search_results_v1';
 
 function mergeStoryMedia(stories) {
   const refreshedStories = stories.map(story => {
@@ -34,15 +35,16 @@ export function saveStories(stories) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(stories));
 }
 
-export async function fetchAllStories() {
+export async function fetchAllStories(query = '') {
   try {
-    const response = await fetch(`/api/news?refresh=${Date.now()}`, {
+    const searchParam = query.trim() ? `&q=${encodeURIComponent(query.trim())}` : '';
+    const response = await fetch(`/api/news?refresh=${Date.now()}${searchParam}`, {
       cache: 'no-store'
     });
     if (!response.ok) throw new Error(`News API returned ${response.status}`);
     const stories = await response.json();
     if (!Array.isArray(stories) || stories.length === 0) throw new Error('No news stories returned');
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(stories));
+    localStorage.setItem(query.trim() ? SEARCH_STORAGE_KEY : STORAGE_KEY, JSON.stringify(stories));
     return stories;
   } catch (error) {
     console.warn('Using local NewsPulse stories:', error.message);
@@ -53,5 +55,6 @@ export async function fetchAllStories() {
 
 export async function getStoryById(id) {
   const stories = getStoredStories();
-  return stories.find(s => s.id === id) || null;
+  const searchResults = JSON.parse(localStorage.getItem(SEARCH_STORAGE_KEY) || '[]');
+  return [...stories, ...searchResults].find(s => s.id === id) || null;
 }

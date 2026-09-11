@@ -88,7 +88,11 @@ export default async function handler(request, response) {
   }
 
   try {
-    const apiResponse = await fetch(`https://gnews.io/api/v4/top-headlines?lang=en&country=us&max=10&apikey=${encodeURIComponent(apiKey)}`);
+    const query = typeof request.query?.q === 'string' ? request.query.q.trim() : '';
+    const endpoint = query
+      ? `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&max=10&sortby=publishedAt&apikey=${encodeURIComponent(apiKey)}`
+      : `https://gnews.io/api/v4/top-headlines?lang=en&country=us&max=10&apikey=${encodeURIComponent(apiKey)}`;
+    const apiResponse = await fetch(endpoint);
     if (!apiResponse.ok) {
       return response.status(apiResponse.status).json({ error: 'The news provider rejected the request' });
     }
