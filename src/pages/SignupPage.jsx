@@ -11,7 +11,8 @@ export default function SignupPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [selectedTopics, setSelectedTopics] = useState(["Technology", "AI & Robotics"]);
-  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const { signup } = useAuth();
   const navigate = useNavigate();
 
   const toggleTopic = (t) => {
@@ -20,8 +21,15 @@ export default function SignupPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) return;
-    login({ username, email });
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+    const result = signup({ username, email, password });
+    if (result.error) {
+      setError(result.error);
+      return;
+    }
     navigate('/dashboard');
   };
 
@@ -38,6 +46,7 @@ export default function SignupPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600 dark:bg-red-950/40 dark:text-red-300">{error}</p>}
           <div>
             <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Username</label>
             <input

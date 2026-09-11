@@ -23,6 +23,11 @@ export function AuthProvider({ children }) {
     return localStorage.getItem('newspulse_theme') || 'dark';
   });
 
+  const [accounts, setAccounts] = useState(() => {
+    const saved = localStorage.getItem('newspulse_accounts');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
@@ -33,16 +38,42 @@ export function AuthProvider({ children }) {
     localStorage.setItem('newspulse_theme', theme);
   }, [theme]);
 
-  const login = ({ username, email }) => {
+  const login = ({ username, email, password }) => {
     const normalizedUsername = username?.trim() || email?.split('@')[0] || 'analyst';
+    const identifier = (username || email || '').trim().toLowerCase();
+    const account = accounts.find(item =>
+      item.username.toLowerCase() === identifier || item.email.toLowerCase() === identifier
+    );
+
+    if (account && account.password !== password) {
+      return { error: 'Incorrect password.' };
+    }
+
     const newUser = {
       ...DEMO_USER,
-      name: normalizedUsername,
-      username: normalizedUsername,
-      email: email?.trim() || `${normalizedUsername}@newspulse.local`
+      name: account?.name || normalizedUsername,
+      username: account?.username || normalizedUsername,
+      email: account?.email || email?.trim() || `${normalizedUsername}@newspulse.local`
     };
     setUser(newUser);
     localStorage.setItem('newspulse_user', JSON.stringify(newUser));
+    return { user: newUser };
+  };
+
+  const signup = ({ username, email, password }) => {
+    const normalizedUsername = username.trim().toLowerCase();
+    const normalizedEmail = email.trim().toLowerCase();
+    const alreadyExists = accounts.some(account =>
+      account.username.toLowerCase() === normalizedUsername || account.email.toLowerCase() === normalizedEmail
+    );
+
+    if (alreadyExists) return { error: 'That username or email is already registered.' };
+
+    const account = { username: normalizedUsername, email: normalizedEmail, password, name: username.trim() };
+    const updatedAccounts = [...accounts, account];
+    setAccounts(updatedAccounts);
+    localStorage.setItem('newspulse_accounts', JSON.stringify(updatedAccounts));
+    return login({ username: normalizedUsername, email: normalizedEmail, password });
   };
 
   const logout = () => {
@@ -84,6 +115,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider value={{
       user,
       login,
+      signup,
       logout,
       updateUser,
       savedStories,

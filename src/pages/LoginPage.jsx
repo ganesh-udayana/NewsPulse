@@ -6,12 +6,21 @@ import { useAuth } from '../hooks/useAuth';
 export default function LoginPage() {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login({ username: identifier.includes('@') ? '' : identifier, email: identifier.includes('@') ? identifier : '' });
+    const result = login({
+      username: identifier.includes('@') ? '' : identifier,
+      email: identifier.includes('@') ? identifier : '',
+      password
+    });
+    if (result.error) {
+      setError(result.error);
+      return;
+    }
     navigate('/dashboard');
   };
 
@@ -28,6 +37,7 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600 dark:bg-red-950/40 dark:text-red-300">{error}</p>}
           <div>
             <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Username or email</label>
             <input
