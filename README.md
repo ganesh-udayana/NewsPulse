@@ -22,6 +22,10 @@ NewsPulse AI is a frontend-first news intelligence dashboard for tracking develo
 - Tailwind CSS
 - Lucide React icons
 
+## Development Tools
+
+NewsPulse was developed with **Antigravity** as an AI-assisted development tool. It was used to help with project scaffolding, UI implementation, debugging, responsive design improvements, API integration, and documentation. The application itself runs on React, Vite, Tailwind CSS, and the configured news API providers.
+
 ## Getting Started
 
 ### Requirements
