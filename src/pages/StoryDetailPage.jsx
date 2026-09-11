@@ -96,7 +96,9 @@ export default function StoryDetailPage() {
 
       {/* Story Header */}
       <div className="space-y-4">
-        <img src={story.image} alt={story.imageAlt} className="w-full h-56 sm:h-80 object-cover rounded-2xl border border-slate-200 dark:border-slate-800" />
+        <div className="aspect-[16/7] w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-800">
+          <img src={story.image} alt={story.imageAlt} className="h-full w-full object-contain" />
+        </div>
         <div className="flex flex-wrap items-center gap-2">
           <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-400 uppercase tracking-wide">
             {story.status}
