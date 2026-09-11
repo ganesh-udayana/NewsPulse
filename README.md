@@ -82,6 +82,12 @@ src/
 
 This project currently uses a frontend authentication prototype. Users enter a username or email and password when signing in, and new accounts collect a username, email, password, and confirmation. Account state is stored locally; there are no hard-coded login values or real server-side authentication.
 
+## Live News API
+
+The app requests live headlines through the Vercel serverless function at `/api/news`. The function reads the server-only `GNEWS_API_KEY` environment variable and normalizes GNews articles into NewsPulse story cards. If the API key is missing, the request fails, or the provider rate limit is reached, the app falls back to the local stories in `src/data/demoData.js`.
+
+Never use a `VITE_` prefix for the API key because Vite exposes those variables to browser code. Add `GNEWS_API_KEY` in the Vercel project settings and in a local `.env` file for development. Do not commit `.env` or paste the key into source code.
+
 ## Data and Images
 
 The sample stories are stored in `src/data/demoData.js`. Story images use remote Unsplash URLs and include descriptive alt text. Replace these URLs with approved, owned assets before using the application in production.

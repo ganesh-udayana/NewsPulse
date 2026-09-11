@@ -35,9 +35,18 @@ export function saveStories(stories) {
 }
 
 export async function fetchAllStories() {
-  // Realistic brief delay for genuine loading states
-  await new Promise(r => setTimeout(r, 180));
-  return getStoredStories();
+  try {
+    const response = await fetch('/api/news');
+    if (!response.ok) throw new Error(`News API returned ${response.status}`);
+    const stories = await response.json();
+    if (!Array.isArray(stories) || stories.length === 0) throw new Error('No news stories returned');
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stories));
+    return stories;
+  } catch (error) {
+    console.warn('Using local NewsPulse stories:', error.message);
+    await new Promise(r => setTimeout(r, 180));
+    return getStoredStories();
+  }
 }
 
 export async function getStoryById(id) {
