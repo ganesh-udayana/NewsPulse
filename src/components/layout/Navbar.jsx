@@ -41,7 +41,7 @@ export default function Navbar({ onSimulate, onToggleMobileNav }) {
             </div>
             <div className="flex flex-col">
               <span className="truncate text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
-                NewsPulse <span className="text-blue-500 text-[10px] px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 uppercase font-bold tracking-wide">AI</span>
+                NewsPulse
               </span>
               <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-tight -mt-1 hidden sm:inline">
                 Developing Story Intelligence

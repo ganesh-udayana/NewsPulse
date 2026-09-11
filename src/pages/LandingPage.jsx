@@ -76,7 +76,7 @@ export default function LandingPage() {
 
       {/* Simple Footer */}
       <footer className="border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500">
-        NewsPulse AI • Hackathon Edition • Frontend-First Architecture
+        NewsPulse • Hackathon Edition • Frontend-First Architecture
       </footer>
     </div>
   );

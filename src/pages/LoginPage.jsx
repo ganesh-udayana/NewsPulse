@@ -32,7 +32,7 @@ export default function LoginPage() {
           <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md mb-3">
             <Newspaper className="h-6 w-6" />
           </div>
-          <h1 className="text-xl font-bold text-slate-900 dark:text-white">Welcome to NewsPulse AI</h1>
+          <h1 className="text-xl font-bold text-slate-900 dark:text-white">Welcome to NewsPulse</h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Sign in to access real-time story intelligence</p>
         </div>
 
