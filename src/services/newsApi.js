@@ -36,7 +36,9 @@ export function saveStories(stories) {
 
 export async function fetchAllStories() {
   try {
-    const response = await fetch('/api/news');
+    const response = await fetch(`/api/news?refresh=${Date.now()}`, {
+      cache: 'no-store'
+    });
     if (!response.ok) throw new Error(`News API returned ${response.status}`);
     const stories = await response.json();
     if (!Array.isArray(stories) || stories.length === 0) throw new Error('No news stories returned');
