@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchAllStories } from '../services/newsApi';
 import { Link } from 'react-router-dom';
+import StoryImage from '../components/story/StoryImage';
 
 const CATS = ['All', 'Technology', 'Science', 'Energy', 'Cybersecurity'];
 
@@ -36,7 +37,7 @@ export default function CategoriesPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filtered.map(story => (
           <div key={story.id} className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-2">
-            <img src={story.image} alt={story.imageAlt} className="w-full h-36 object-cover rounded-lg" />
+            <StoryImage story={story} className="w-full h-36 object-cover rounded-lg" />
             <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 uppercase">
               {story.category}
             </span>

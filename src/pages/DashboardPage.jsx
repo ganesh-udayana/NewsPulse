@@ -4,6 +4,7 @@ import { TrendingUp, Flame, ArrowRight, Bookmark } from 'lucide-react';
 import { fetchAllStories } from '../services/newsApi';
 import { useAuth } from '../hooks/useAuth';
 import WhatsNewSection from '../components/story/WhatsNewSection';
+import StoryImage from '../components/story/StoryImage';
 
 export default function DashboardPage() {
   const [stories, setStories] = useState([]);
@@ -64,8 +65,8 @@ export default function DashboardPage() {
       {primaryStory && (
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
           <div className="relative h-44 w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 mb-4 sm:h-56 sm:mb-6 lg:h-64">
-            <img src={primaryStory.image} alt="" aria-hidden="true" className="h-full w-full scale-110 object-cover opacity-35 blur-xl" />
-            <img src={primaryStory.image} alt={primaryStory.imageAlt} className="absolute inset-0 h-full w-full object-contain" />
+            <StoryImage story={primaryStory} alt="" aria-hidden="true" className="h-full w-full scale-110 object-cover opacity-35 blur-xl" />
+            <StoryImage story={primaryStory} className="absolute inset-0 h-full w-full object-contain" />
           </div>
           <div className="flex flex-wrap items-center gap-2.5 mb-4">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700 dark:bg-red-950/80 dark:text-red-400 uppercase tracking-wide flex items-center gap-1">
@@ -124,7 +125,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {secondaryStories.map(story => (
             <div key={story.id} className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all">
-              <img src={story.image} alt={story.imageAlt} className="w-full h-40 object-cover rounded-xl mb-4" />
+              <StoryImage story={story} className="w-full h-40 object-cover rounded-xl mb-4" />
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2.5">
                   <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">

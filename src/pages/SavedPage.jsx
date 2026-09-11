@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Bookmark, Trash2 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { fetchAllStories } from '../services/newsApi';
+import StoryImage from '../components/story/StoryImage';
 
 export default function SavedPage() {
   const { savedStories, toggleSaveStory } = useAuth();
@@ -37,7 +38,7 @@ export default function SavedPage() {
         <div className="space-y-3">
           {stories.map(story => (
             <div key={story.id} className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-between gap-4">
-              <img src={story.image} alt={story.imageAlt} className="hidden sm:block h-20 w-28 rounded-lg object-cover shrink-0" />
+              <StoryImage story={story} className="hidden sm:block h-20 w-28 rounded-lg object-cover shrink-0" />
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300">

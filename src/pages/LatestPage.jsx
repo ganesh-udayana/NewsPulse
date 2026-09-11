@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, ArrowRight } from 'lucide-react';
 import { fetchAllStories } from '../services/newsApi';
+import StoryImage from '../components/story/StoryImage';
 
 export default function LatestPage() {
   const [stories, setStories] = useState([]);
@@ -27,7 +28,7 @@ export default function LatestPage() {
       <div className="space-y-3">
         {stories.map(story => (
           <Link key={story.id} to={`/story/${story.id}`} className="group flex gap-4 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-blue-400 dark:hover:border-blue-700 transition-colors">
-            <img src={story.image} alt={story.imageAlt} className="h-24 w-28 sm:h-28 sm:w-40 rounded-xl object-cover shrink-0" />
+            <StoryImage story={story} className="h-24 w-28 sm:h-28 sm:w-40 rounded-xl object-cover shrink-0" />
             <div className="min-w-0 flex-1 py-1">
               <div className="flex flex-wrap items-center gap-2 mb-2">
                 <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300">{story.category}</span>

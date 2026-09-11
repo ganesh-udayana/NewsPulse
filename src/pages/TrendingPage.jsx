@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TrendingUp, Flame, ArrowUpRight } from 'lucide-react';
 import { fetchAllStories } from '../services/newsApi';
+import StoryImage from '../components/story/StoryImage';
 
 export default function TrendingPage() {
   const [stories, setStories] = useState([]);
@@ -32,7 +33,7 @@ export default function TrendingPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {stories.map((story, index) => (
           <Link key={story.id} to={`/story/${story.id}`} className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-orange-400 dark:hover:border-orange-700 transition-colors">
-            <img src={story.image} alt={story.imageAlt} className="w-full h-44 object-cover" />
+            <StoryImage story={story} className="w-full h-44 object-cover" />
             <div className="p-5">
               <div className="flex items-center justify-between gap-3 mb-3">
                 <span className="text-xs font-black text-orange-500">#{index + 1}</span>

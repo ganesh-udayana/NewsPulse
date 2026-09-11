@@ -6,6 +6,7 @@ import { useAuth } from '../hooks/useAuth';
 import WhatsNewSection from '../components/story/WhatsNewSection';
 import SourceComparison from '../components/story/SourceComparison';
 import TimelineView from '../components/story/TimelineView';
+import StoryImage from '../components/story/StoryImage';
 
 export default function StoryDetailPage() {
   const { id } = useParams();
@@ -97,8 +98,8 @@ export default function StoryDetailPage() {
       {/* Story Header */}
       <div className="space-y-4">
         <div className="relative h-44 w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-800 sm:h-56 lg:h-64">
-          <img src={story.image} alt="" aria-hidden="true" className="h-full w-full scale-110 object-cover opacity-35 blur-xl" />
-          <img src={story.image} alt={story.imageAlt} className="absolute inset-0 h-full w-full object-contain" />
+          <StoryImage story={story} alt="" aria-hidden="true" className="h-full w-full scale-110 object-cover opacity-35 blur-xl" />
+          <StoryImage story={story} className="absolute inset-0 h-full w-full object-contain" />
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-400 uppercase tracking-wide">
