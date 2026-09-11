@@ -145,7 +145,8 @@ export default async function handler(request, response) {
       }
     }
 
-    return response.status(503).json({ error: 'No recent news provider returned results' });
+    response.setHeader('X-News-Provider', 'Unavailable');
+    return response.status(200).json([]);
   } catch (error) {
     console.error('News provider request failed:', error);
     return response.status(502).json({ error: 'Unable to retrieve live news' });

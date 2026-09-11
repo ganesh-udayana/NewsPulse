@@ -45,10 +45,11 @@ export async function fetchAllStories(query = '') {
     const stories = await response.json();
     if (!Array.isArray(stories)) throw new Error('Invalid news response');
     localStorage.setItem(query.trim() ? SEARCH_STORAGE_KEY : STORAGE_KEY, JSON.stringify(stories));
+    const provider = response.headers.get('X-News-Provider') || 'Live provider';
     localStorage.setItem('newspulse_news_status', JSON.stringify({
-      source: response.headers.get('X-News-Provider') || 'Live provider',
+      source: provider,
       fetchedAt: new Date().toISOString(),
-      live: true
+      live: provider !== 'Unavailable' && stories.length > 0
     }));
     return stories;
   } catch (error) {
