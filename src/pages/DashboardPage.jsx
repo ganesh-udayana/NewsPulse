@@ -8,11 +8,13 @@ import WhatsNewSection from '../components/story/WhatsNewSection';
 export default function DashboardPage() {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [feedStatus, setFeedStatus] = useState(null);
   const { savedStories, toggleSaveStory } = useAuth();
 
   useEffect(() => {
     const refreshStories = () => fetchAllStories().then(data => {
       setStories(data);
+      setFeedStatus(JSON.parse(localStorage.getItem('newspulse_news_status') || 'null'));
       setLoading(false);
     });
     refreshStories();
@@ -46,6 +48,11 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          {feedStatus && (
+            <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${feedStatus.live ? 'text-emerald-600 border-emerald-200 bg-emerald-50 dark:text-emerald-400 dark:border-emerald-900 dark:bg-emerald-950/30' : 'text-amber-600 border-amber-200 bg-amber-50 dark:text-amber-400 dark:border-amber-900 dark:bg-amber-950/30'}`}>
+              {feedStatus.live ? `${feedStatus.source} • ${new Date(feedStatus.fetchedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : 'Live feed unavailable • showing local data'}
+            </span>
+          )}
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
             <Flame className="h-3.5 w-3.5 text-blue-500" />
             {stories.length} Active Story Streams

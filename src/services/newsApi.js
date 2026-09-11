@@ -45,9 +45,20 @@ export async function fetchAllStories(query = '') {
     const stories = await response.json();
     if (!Array.isArray(stories)) throw new Error('Invalid news response');
     localStorage.setItem(query.trim() ? SEARCH_STORAGE_KEY : STORAGE_KEY, JSON.stringify(stories));
+    localStorage.setItem('newspulse_news_status', JSON.stringify({
+      source: response.headers.get('X-News-Provider') || 'Live provider',
+      fetchedAt: new Date().toISOString(),
+      live: true
+    }));
     return stories;
   } catch (error) {
     console.warn('Using local NewsPulse stories:', error.message);
+    localStorage.setItem('newspulse_news_status', JSON.stringify({
+      source: 'Local fallback',
+      fetchedAt: new Date().toISOString(),
+      live: false,
+      error: error.message
+    }));
     await new Promise(r => setTimeout(r, 180));
     return getStoredStories();
   }

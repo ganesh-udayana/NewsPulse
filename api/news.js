@@ -115,7 +115,7 @@ export default async function handler(request, response) {
         : `https://gnews.io/api/v4/top-headlines?lang=en&country=us&max=10&apikey=${encodeURIComponent(process.env.GNEWS_API_KEY)}`;
       providers.push(async () => {
         const result = await fetch(endpoint);
-        return { response: result, articles: (await result.json()).articles || [] };
+        return { name: 'GNews', response: result, articles: (await result.json()).articles || [] };
       });
     }
 
@@ -126,7 +126,7 @@ export default async function handler(request, response) {
       providers.push(async () => {
         const result = await fetch(endpoint);
         const payload = await result.json();
-        return { response: result, articles: (payload.results || []).map(normalizeNewsDataArticle) };
+        return { name: 'NewsData.io', response: result, articles: (payload.results || []).map(normalizeNewsDataArticle) };
       });
     }
 
@@ -135,7 +135,10 @@ export default async function handler(request, response) {
         const result = await provider();
         if (!result.response.ok) continue;
         const stories = getRecentStories(result.articles);
-        if (stories.length > 0) return response.status(200).json(stories);
+        if (stories.length > 0) {
+          response.setHeader('X-News-Provider', result.name);
+          return response.status(200).json(stories);
+        }
       } catch (providerError) {
         console.warn('News provider failed; trying next provider:', providerError.message);
       }
