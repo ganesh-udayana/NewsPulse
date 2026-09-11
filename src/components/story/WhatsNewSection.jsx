@@ -4,6 +4,19 @@ import { Sparkles, PlusCircle, RefreshCw, AlertTriangle, HelpCircle } from 'luci
 export default function WhatsNewSection({ whatsNew }) {
   if (!whatsNew) return null;
 
+  const renderItems = (items = [], dotClass, emptyMessage) => {
+    if (items.length === 0) {
+      return <li className="text-xs italic text-slate-400 dark:text-slate-500">{emptyMessage}</li>;
+    }
+
+    return items.map((item, i) => (
+      <li key={i} className="flex items-start gap-2">
+        <span className={`h-1.5 w-1.5 rounded-full ${dotClass} mt-1.5 shrink-0`} />
+        <span>{item}</span>
+      </li>
+    ));
+  };
+
   return (
     <section className="rounded-2xl border border-blue-200 dark:border-blue-900/60 bg-gradient-to-b from-blue-50/70 to-white dark:from-blue-950/30 dark:to-slate-900 p-5 sm:p-6 shadow-sm text-left">
       
@@ -41,12 +54,7 @@ export default function WhatsNewSection({ whatsNew }) {
             <span>Newly Reported Information</span>
           </div>
           <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
-            {whatsNew.newlyReported.map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-                <span>{item}</span>
-              </li>
-            ))}
+            {renderItems(whatsNew.newlyReported, 'bg-emerald-500', 'No new details reported yet.')}
           </ul>
         </div>
 
@@ -57,12 +65,7 @@ export default function WhatsNewSection({ whatsNew }) {
             <span>Changed / Revised Details</span>
           </div>
           <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
-            {whatsNew.changedDetails.map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
-                <span>{item}</span>
-              </li>
-            ))}
+            {renderItems(whatsNew.changedDetails, 'bg-amber-500', 'No revisions reported yet.')}
           </ul>
         </div>
 
@@ -73,12 +76,7 @@ export default function WhatsNewSection({ whatsNew }) {
             <span>Conflicting Reports (Unresolved)</span>
           </div>
           <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
-            {whatsNew.conflictingReports.map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-red-500 mt-1.5 shrink-0" />
-                <span>{item}</span>
-              </li>
-            ))}
+            {renderItems(whatsNew.conflictingReports, 'bg-red-500', 'No conflicting reports found.')}
           </ul>
         </div>
 
@@ -89,12 +87,7 @@ export default function WhatsNewSection({ whatsNew }) {
             <span>Critical Details Still Unknown</span>
           </div>
           <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
-            {whatsNew.stillUnknown.map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
-                <span>{item}</span>
-              </li>
-            ))}
+            {renderItems(whatsNew.stillUnknown, 'bg-slate-400', 'No unknown details recorded yet.')}
           </ul>
         </div>
 
