@@ -1,4 +1,4 @@
-# NewsPulse AI
+# NewsPulse
 
 NewsPulse AI is a frontend-first news intelligence dashboard for tracking developing stories. It groups related coverage into living story streams and highlights what is new, changed, disputed, and still unknown.
 
