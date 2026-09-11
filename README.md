@@ -21,7 +21,6 @@ NewsPulse AI is a frontend-first news intelligence dashboard for tracking develo
 - React Router
 - Tailwind CSS
 - Lucide React icons
-- Recharts
 
 ## Getting Started
 
