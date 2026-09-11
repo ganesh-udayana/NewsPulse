@@ -112,7 +112,7 @@ export default async function handler(request, response) {
     if (process.env.GNEWS_API_KEY) {
       const endpoint = query
         ? `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&max=10&sortby=publishedAt&apikey=${encodeURIComponent(process.env.GNEWS_API_KEY)}`
-        : `https://gnews.io/api/v4/top-headlines?lang=en&country=us&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&max=10&sortby=publishedAt&apikey=${encodeURIComponent(process.env.GNEWS_API_KEY)}`;
+        : `https://gnews.io/api/v4/top-headlines?lang=en&country=us&max=10&apikey=${encodeURIComponent(process.env.GNEWS_API_KEY)}`;
       providers.push(async () => {
         const result = await fetch(endpoint);
         return { response: result, articles: (await result.json()).articles || [] };
@@ -131,10 +131,14 @@ export default async function handler(request, response) {
     }
 
     for (const provider of providers) {
-      const result = await provider();
-      if (!result.response.ok) continue;
-      const stories = getRecentStories(result.articles);
-      if (stories.length > 0) return response.status(200).json(stories);
+      try {
+        const result = await provider();
+        if (!result.response.ok) continue;
+        const stories = getRecentStories(result.articles);
+        if (stories.length > 0) return response.status(200).json(stories);
+      } catch (providerError) {
+        console.warn('News provider failed; trying next provider:', providerError.message);
+      }
     }
 
     return response.status(503).json({ error: 'No recent news provider returned results' });
