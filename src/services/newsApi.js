@@ -43,7 +43,7 @@ export async function fetchAllStories(query = '') {
     });
     if (!response.ok) throw new Error(`News API returned ${response.status}`);
     const stories = await response.json();
-    if (!Array.isArray(stories) || stories.length === 0) throw new Error('No news stories returned');
+    if (!Array.isArray(stories)) throw new Error('Invalid news response');
     localStorage.setItem(query.trim() ? SEARCH_STORAGE_KEY : STORAGE_KEY, JSON.stringify(stories));
     return stories;
   } catch (error) {
