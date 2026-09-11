@@ -34,7 +34,7 @@ export default function LandingPage() {
             to="/login"
             className="w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all"
           >
-            One-Click Judge Demo
+            View the platform
           </Link>
         </div>
 

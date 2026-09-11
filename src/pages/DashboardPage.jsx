@@ -53,6 +53,7 @@ export default function DashboardPage() {
       {/* Featured Primary Developing Story */}
       {primaryStory && (
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
+          <img src={primaryStory.image} alt={primaryStory.imageAlt} className="w-full h-52 sm:h-64 object-cover rounded-xl mb-6" />
           <div className="flex flex-wrap items-center gap-2.5 mb-4">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700 dark:bg-red-950/80 dark:text-red-400 uppercase tracking-wide flex items-center gap-1">
               <span className="h-2 w-2 rounded-full bg-red-500 animate-ping" />
@@ -110,6 +111,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {secondaryStories.map(story => (
             <div key={story.id} className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all">
+              <img src={story.image} alt={story.imageAlt} className="w-full h-40 object-cover rounded-xl mb-4" />
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2.5">
                   <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">

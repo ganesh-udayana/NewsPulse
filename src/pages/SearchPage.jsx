@@ -46,6 +46,7 @@ export default function SearchPage() {
         ) : (
           filtered.map(story => (
             <div key={story.id} className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex justify-between items-center">
+              <img src={story.image} alt={story.imageAlt} className="hidden sm:block h-16 w-24 rounded-lg object-cover mr-4 shrink-0" />
               <div>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 uppercase">
                   {story.category}

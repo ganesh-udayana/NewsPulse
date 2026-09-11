@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Newspaper, Sparkles, ArrowRight } from 'lucide-react';
+import { Newspaper, ArrowRight } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('demo@newspulse.ai');
-  const [password, setPassword] = useState('password123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     login(email);
-    navigate('/dashboard');
-  };
-
-  const handleQuickDemo = () => {
-    login('demo@newspulse.ai');
     navigate('/dashboard');
   };
 
@@ -30,21 +25,6 @@ export default function LoginPage() {
           </div>
           <h1 className="text-xl font-bold text-slate-900 dark:text-white">Welcome to NewsPulse AI</h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Sign in to access real-time story intelligence</p>
-        </div>
-
-        {/* Quick Demo Button */}
-        <button
-          onClick={handleQuickDemo}
-          className="w-full mb-5 py-2.5 px-4 rounded-xl text-xs font-bold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-950 transition-colors flex items-center justify-center gap-2 cursor-pointer"
-        >
-          <Sparkles className="h-4 w-4 text-blue-500" />
-          One-Click Demo Login (Pre-Configured)
-        </button>
-
-        <div className="relative flex py-2 items-center mb-5">
-          <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
-          <span className="flex-shrink mx-4 text-[11px] text-slate-400 uppercase font-semibold">Or sign in with email</span>
-          <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
